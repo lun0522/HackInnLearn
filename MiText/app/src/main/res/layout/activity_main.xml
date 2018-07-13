@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ListView
+        android:id="@+id/messages"
+        android:layout_width="match_parent"
+        android:layout_height="453dp"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_text"
+        app:layout_constrainedWidth="true" />
+
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="8dp"
+        android:cursorVisible="false"
+        android:ellipsize="end"
+        android:inputType="text"
+        android:scrollbars="vertical"
+        android:selectAllOnFocus="false"
+        android:hint="Enter Message here"
+        app:layout_constraintTop_toBottomOf="@+id/messages"
+        app:layout_constraintRight_toLeftOf="@id/send_button" />
+
+
+    <Button
+        android:id="@+id/send_button"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_light"
+        android:onClick="sendMessage"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintLeft_toRightOf="@+id/edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/messages"
+        tools:text="Send" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -35,7 +35,7 @@ def result():
         unknown_encoding = face_recognition.face_encodings(unknown_image)[0]
 
         results = face_recognition.compare_faces([biden_encoding], unknown_encoding)
-        print(results)
+        print("Result: " , results[0], "\n\n")
 
         ''' Only uncomment when running client.
         outfile = open("img.jpg", 'wb')  # Open a file for binary write
@@ -47,6 +47,7 @@ def result():
         ret = str(ret)
         return ret
 
+    print("(Result: ', No face)\n\n")
     return "No face"
 
 app.run("0.0.0.0", port=8100)

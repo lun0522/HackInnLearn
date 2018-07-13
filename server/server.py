@@ -1,7 +1,11 @@
 from flask import Flask, request
 import pickle
+import os
+from os.path import expanduser
+from random import randint
 
 app = Flask(__name__)
+
 @app.route('/', methods=['POST'])
 def result():
     #print(request.headers) # should display 'bar'
@@ -11,8 +15,10 @@ def result():
         fh = open("baseline.jpg", 'wb')
         fh.write(request.headers['Image'].decode('base64'))
         fh.close()
+
+    x = randint(0, 100000)        
     
-    fh = open("imageToSave.jpg", "wb")
+    fh = open("//Users/mnarang//hack//server//test//" + str(x) + ".jpg", "wb")
     fh.write(request.headers['Image'].decode('base64'))
     fh.close()
 

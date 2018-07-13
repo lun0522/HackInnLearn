@@ -3,6 +3,8 @@ import pickle
 import os
 from os.path import expanduser
 from random import randint
+import requests
+import face_recognition
 
 app = Flask(__name__)
 
@@ -12,20 +14,30 @@ def result():
     print(len(request.data))
 
     if request.headers['Type'] == 'Baseline':
-        fh = open("baseline.jpg", 'wb')
+        fh = open("//Users//mnarang//hack//server//baseline.jpg", 'wb')
         fh.write(request.headers['Image'].decode('base64'))
         fh.close()
 
-    x = randint(0, 100000)        
+    x = randint(0, 1000000)        
     
     fh = open("//Users/mnarang//hack//server//test//" + str(x) + ".jpg", "wb")
     fh.write(request.headers['Image'].decode('base64'))
     fh.close()
 
-    #outfile = open("img.jpg", 'wb')  # Open a file for binary write
-    #outfile.write(request.data)  # Write it
-    #outfile.flush()  # Optional but a good idea
-    #outfile.close()
+    known_image = face_recognition.load_image_file("//Users//mnarang//hack//server//baseline.jpg")
+    unknown_image = face_recognition.load_image_file("//Users/mnarang//hack//server//test//" + str(x) + ".jpg")
+
+    biden_encoding = face_recognition.face_encodings(known_image)[0]
+    unknown_encoding = face_recognition.face_encodings(unknown_image)[0]
+
+    results = face_recognition.compare_faces([biden_encoding], unknown_encoding)
+    print(results)
+
+    ''' Only uncomment when running client.
+    outfile = open("img.jpg", 'wb')  # Open a file for binary write
+    outfile.write(request.data)  # Write it
+    outfile.flush()  # Optional but a good idea
+    outfile.close() '''
 
     return 'Received !' # response to your request.
 

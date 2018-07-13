@@ -19,6 +19,7 @@
 		B8C7BC8220F7CE5C00046E3F /* FaceIdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7BC8120F7CE5C00046E3F /* FaceIdentityTests.swift */; };
 		B8C7BC8D20F7CE5C00046E3F /* FaceIdentityUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7BC8C20F7CE5C00046E3F /* FaceIdentityUITests.swift */; };
 		B8E070B420F90AB300AD0382 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E070B320F90AB300AD0382 /* CaptureViewController.swift */; };
+		B8E070B820F93B6800AD0382 /* mitek.png in Resources */ = {isa = PBXBuildFile; fileRef = B8E070B720F93B6800AD0382 /* mitek.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		B8C7BC8E20F7CE5C00046E3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8C7BC9C20F7CF4C00046E3F /* LocalDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDetector.swift; sourceTree = "<group>"; };
 		B8E070B320F90AB300AD0382 /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
+		B8E070B720F93B6800AD0382 /* mitek.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mitek.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				B89A16F820F9041F00FF069F /* face.png */,
+				B8E070B720F93B6800AD0382 /* mitek.png */,
 				B8C7BC6C20F7CE5A00046E3F /* AppDelegate.swift */,
 				B89A16F620F8FCCA00FF069F /* RegisterViewController.swift */,
 				B8E070B320F90AB300AD0382 /* CaptureViewController.swift */,
@@ -244,6 +247,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8E070B820F93B6800AD0382 /* mitek.png in Resources */,
 				B8C7BC7720F7CE5C00046E3F /* LaunchScreen.storyboard in Resources */,
 				B8C7BC7420F7CE5C00046E3F /* Assets.xcassets in Resources */,
 				B89A16F920F9041F00FF069F /* face.png in Resources */,

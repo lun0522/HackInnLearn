@@ -12,6 +12,8 @@ class RegisterViewController: UIViewController, VideoCaptureDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var captureButton: UIButton!
+    @IBOutlet weak var nameText: UITextField!
+    @IBOutlet weak var emailText: UITextField!
     var videoLayer: VideoLayer!
     var faceBoundingBox: CGRect?
     let noFaceImage = UIImage(contentsOfFile: Bundle.main.path(forResource: "face", ofType: "png")!)!
@@ -22,7 +24,7 @@ class RegisterViewController: UIViewController, VideoCaptureDelegate {
         LocalDetector.sharedInstance.initialize()
         imageView.contentMode = .scaleToFill
         imageView.image = noFaceImage
-        captureButton.setTitle("Capture face", for: .normal)
+        captureButton.setTitle("Register", for: .normal)
         captureButton.addTarget(self, action: #selector(capture), for: .touchDown)
         enableCaptureButton()
     }
@@ -36,8 +38,18 @@ class RegisterViewController: UIViewController, VideoCaptureDelegate {
     }
     
     @objc func capture(sender: UIButton) {
+        guard (nameText.text?.count)! > 0 else {
+            showError("Please enter your name")
+            return
+        }
+        
+        guard (emailText.text?.count)! > 0 else {
+            showError("Please enter your email")
+            return
+        }
+        
         switch self.captureButton.title(for: .normal) {
-        case "Capture face":
+        case "Register":
             do {
                 try videoLayer = VideoLayer.newLayer(withCamera: .front, delegate: self)
             } catch {

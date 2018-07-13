@@ -28,12 +28,12 @@ class CaptureViewController: UIViewController, VideoCaptureDelegate {
     let shapeLayer = CAShapeLayer()
     var faceBoundingBox: CGRect?
     var viewBoundsSize: CGSize!
-    var imageView = UIImageView()
     var smallTimer: Timer!
     var blackImage: UIImage!
     let blackLayer = UIImageView()
     let noFaceImage = UIImage(contentsOfFile: Bundle.main.path(forResource: "face", ofType: "png")!)!
     var noFaceCount = 0
+    var faceImage: UIImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,10 +50,6 @@ class CaptureViewController: UIViewController, VideoCaptureDelegate {
         shapeLayer.setAffineTransform(CGAffineTransform(scaleX: 1, y: -1))
         view.layer.insertSublayer(shapeLayer, at: 0)
         view.layer.insertSublayer(videoLayer, at: 0)
-        
-        imageView = UIImageView.init(frame: CGRect.init(x: 20.0, y: 560.0, width: 150.0, height: 150.0))
-        imageView.contentMode = .scaleAspectFill
-        view.addSubview(imageView)
         
         viewBoundsSize = view.bounds.size
         blackImage = UIImage(color: .black, size: viewBoundsSize)
@@ -82,7 +78,7 @@ class CaptureViewController: UIViewController, VideoCaptureDelegate {
     
     @objc func timeSmall() {
         if self.faceBoundingBox != nil {
-            let imageData = UIImageJPEGRepresentation(imageView.image!, 1.0)?.base64EncodedString()
+            let imageData = UIImageJPEGRepresentation(faceImage, 1.0)?.base64EncodedString()
             ServerUtils.sendData(Data(),
                                  headerFields: ["Type": "Test",
                                                 "Image": imageData!]) { returnedData in
@@ -148,7 +144,7 @@ class CaptureViewController: UIViewController, VideoCaptureDelegate {
     func didNotFindFace() {
         DispatchQueue.main.async {
             self.faceBoundingBox = nil
-            self.imageView.image = self.noFaceImage
+            self.faceImage = self.noFaceImage
             self.shapeLayer.sublayers = nil
         }
     }
@@ -165,7 +161,7 @@ class CaptureViewController: UIViewController, VideoCaptureDelegate {
         let uiImage = UIImage(cgImage: cgImage)
         
         DispatchQueue.main.async {
-            self.imageView.image = uiImage
+            self.faceImage = uiImage
             let rectLayer = CAShapeLayer()
             rectLayer.fillColor = UIColor.clear.cgColor
             rectLayer.strokeColor = UIColor.red.cgColor

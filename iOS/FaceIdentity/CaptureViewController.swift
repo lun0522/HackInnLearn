@@ -8,6 +8,20 @@
 
 import UIKit
 
+public extension UIImage {
+    public convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
+        let rect = CGRect(origin: .zero, size: size)
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+        color.setFill()
+        UIRectFill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        guard let cgImage = image?.cgImage else { return nil }
+        self.init(cgImage: cgImage)
+    }
+}
+
 class CaptureViewController: UIViewController, VideoCaptureDelegate {
 
     var videoLayer: VideoLayer!
@@ -15,10 +29,11 @@ class CaptureViewController: UIViewController, VideoCaptureDelegate {
     var faceBoundingBox: CGRect?
     var viewBoundsSize: CGSize!
     var imageView = UIImageView()
-    var bigTimer: Timer!
     var smallTimer: Timer!
-    var countDown = 0
+    var blackImage: UIImage!
+    let blackLayer = UIImageView()
     let noFaceImage = UIImage(contentsOfFile: Bundle.main.path(forResource: "face", ofType: "png")!)!
+    var noFaceCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,14 +56,16 @@ class CaptureViewController: UIViewController, VideoCaptureDelegate {
         view.addSubview(imageView)
         
         viewBoundsSize = view.bounds.size
+        blackImage = UIImage(color: .black, size: viewBoundsSize)
+        blackLayer.image = blackImage
         
-        bigTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(timeBig), userInfo: nil, repeats: true)
-        bigTimer.fire()
+        smallTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timeSmall), userInfo: nil, repeats: true)
     }
     
     override func viewDidLayoutSubviews() {
         videoLayer.frame = view.frame
         shapeLayer.frame = view.frame
+        blackLayer.frame = view.frame
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,11 +80,6 @@ class CaptureViewController: UIViewController, VideoCaptureDelegate {
         }
     }
     
-    @objc func timeBig() {
-        countDown = 10
-        smallTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timeSmall), userInfo: nil, repeats: true)
-    }
-    
     @objc func timeSmall() {
         if self.faceBoundingBox != nil {
             let imageData = UIImageJPEGRepresentation(imageView.image!, 1.0)?.base64EncodedString()
@@ -76,18 +88,37 @@ class CaptureViewController: UIViewController, VideoCaptureDelegate {
                                                 "Image": imageData!]) { returnedData in
                                                     if let data = returnedData {
                                                         if let returnedStr = String.init(data: data, encoding: .utf8) {
-                                                            if returnedStr != "True" {
-                                                                self.showError(returnedStr)
+                                                            switch returnedStr {
+                                                            case "True":
+                                                                DispatchQueue.main.async {
+                                                                    if self.blackLayer.superview != nil {
+                                                                        self.blackLayer.removeFromSuperview()
+                                                                    }
+                                                                }
+                                                                self.noFaceCount = 0
+                                                            case "False":
+                                                                DispatchQueue.main.async {
+                                                                    self.view.addSubview(self.blackLayer)
+                                                                }
+                                                                self.noFaceCount = 0
+                                                            default:
+                                                                self.noFaceCount += 1
+                                                                if self.noFaceCount == 3 {
+                                                                    DispatchQueue.main.async {
+                                                                        self.view.addSubview(self.blackLayer)
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     }
             }
-        }
-        
-        countDown -= 1
-        if countDown == 0 {
-            smallTimer.invalidate()
-            smallTimer = nil
+        } else {
+            self.noFaceCount += 1
+            if self.noFaceCount == 3 {
+                DispatchQueue.main.async {
+                    self.view.addSubview(self.blackLayer)
+                }
+            }
         }
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController, VideoCaptureDelegate {
+class RegisterViewController: UIViewController, VideoCaptureDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var captureButton: UIButton!
@@ -27,6 +27,13 @@ class RegisterViewController: UIViewController, VideoCaptureDelegate {
         captureButton.setTitle("Register", for: .normal)
         captureButton.addTarget(self, action: #selector(capture), for: .touchDown)
         enableCaptureButton()
+        nameText.delegate = self
+        emailText.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     func showError(_ description: String) {

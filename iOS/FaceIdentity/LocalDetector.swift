@@ -13,7 +13,7 @@ class LocalDetector {
     
     static let sharedInstance = LocalDetector()
     static let kDetectionTimeIntervalThreshold = 1.0
-    static let kTrackingConfidenceThreshold = 2.0
+    static let kTrackingConfidenceThreshold = 0.9
     
     enum DetectionResult {
         case notFound

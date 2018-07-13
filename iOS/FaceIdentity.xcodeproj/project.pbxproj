@@ -10,13 +10,15 @@
 		B89A16EC20F7D55500FF069F /* LocalDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7BC9C20F7CF4C00046E3F /* LocalDetector.swift */; };
 		B89A16EE20F7D77600FF069F /* ServerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89A16ED20F7D77600FF069F /* ServerUtils.swift */; };
 		B89A16F020F7D8F500FF069F /* VideoLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89A16EF20F7D8F500FF069F /* VideoLayer.swift */; };
+		B89A16F720F8FCCA00FF069F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89A16F620F8FCCA00FF069F /* RegisterViewController.swift */; };
+		B89A16F920F9041F00FF069F /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = B89A16F820F9041F00FF069F /* face.png */; };
 		B8C7BC6D20F7CE5A00046E3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7BC6C20F7CE5A00046E3F /* AppDelegate.swift */; };
-		B8C7BC6F20F7CE5A00046E3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7BC6E20F7CE5A00046E3F /* ViewController.swift */; };
 		B8C7BC7220F7CE5A00046E3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8C7BC7020F7CE5A00046E3F /* Main.storyboard */; };
 		B8C7BC7420F7CE5C00046E3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8C7BC7320F7CE5C00046E3F /* Assets.xcassets */; };
 		B8C7BC7720F7CE5C00046E3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8C7BC7520F7CE5C00046E3F /* LaunchScreen.storyboard */; };
 		B8C7BC8220F7CE5C00046E3F /* FaceIdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7BC8120F7CE5C00046E3F /* FaceIdentityTests.swift */; };
 		B8C7BC8D20F7CE5C00046E3F /* FaceIdentityUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C7BC8C20F7CE5C00046E3F /* FaceIdentityUITests.swift */; };
+		B8E070B420F90AB300AD0382 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E070B320F90AB300AD0382 /* CaptureViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,9 +41,10 @@
 /* Begin PBXFileReference section */
 		B89A16ED20F7D77600FF069F /* ServerUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerUtils.swift; sourceTree = "<group>"; };
 		B89A16EF20F7D8F500FF069F /* VideoLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoLayer.swift; sourceTree = "<group>"; };
+		B89A16F620F8FCCA00FF069F /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		B89A16F820F9041F00FF069F /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = "<group>"; };
 		B8C7BC6920F7CE5A00046E3F /* FaceIdentity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceIdentity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8C7BC6C20F7CE5A00046E3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B8C7BC6E20F7CE5A00046E3F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B8C7BC7120F7CE5A00046E3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B8C7BC7320F7CE5C00046E3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8C7BC7620F7CE5C00046E3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -53,6 +56,7 @@
 		B8C7BC8C20F7CE5C00046E3F /* FaceIdentityUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceIdentityUITests.swift; sourceTree = "<group>"; };
 		B8C7BC8E20F7CE5C00046E3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8C7BC9C20F7CF4C00046E3F /* LocalDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDetector.swift; sourceTree = "<group>"; };
+		B8E070B320F90AB300AD0382 /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +107,10 @@
 		B8C7BC6B20F7CE5A00046E3F /* FaceIdentity */ = {
 			isa = PBXGroup;
 			children = (
+				B89A16F820F9041F00FF069F /* face.png */,
 				B8C7BC6C20F7CE5A00046E3F /* AppDelegate.swift */,
-				B8C7BC6E20F7CE5A00046E3F /* ViewController.swift */,
+				B89A16F620F8FCCA00FF069F /* RegisterViewController.swift */,
+				B8E070B320F90AB300AD0382 /* CaptureViewController.swift */,
 				B8C7BC9C20F7CF4C00046E3F /* LocalDetector.swift */,
 				B89A16ED20F7D77600FF069F /* ServerUtils.swift */,
 				B89A16EF20F7D8F500FF069F /* VideoLayer.swift */,
@@ -240,6 +246,7 @@
 			files = (
 				B8C7BC7720F7CE5C00046E3F /* LaunchScreen.storyboard in Resources */,
 				B8C7BC7420F7CE5C00046E3F /* Assets.xcassets in Resources */,
+				B89A16F920F9041F00FF069F /* face.png in Resources */,
 				B8C7BC7220F7CE5A00046E3F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,8 +273,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B89A16EE20F7D77600FF069F /* ServerUtils.swift in Sources */,
-				B8C7BC6F20F7CE5A00046E3F /* ViewController.swift in Sources */,
+				B8E070B420F90AB300AD0382 /* CaptureViewController.swift in Sources */,
 				B8C7BC6D20F7CE5A00046E3F /* AppDelegate.swift in Sources */,
+				B89A16F720F8FCCA00FF069F /* RegisterViewController.swift in Sources */,
 				B89A16F020F7D8F500FF069F /* VideoLayer.swift in Sources */,
 				B89A16EC20F7D55500FF069F /* LocalDetector.swift in Sources */,
 			);

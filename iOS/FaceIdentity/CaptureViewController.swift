@@ -1,22 +1,25 @@
 //
-//  ViewController.swift
+//  CaptureViewController.swift
 //  FaceIdentity
 //
-//  Created by Pujun Lun on 7/12/18.
+//  Created by Pujun Lun on 7/13/18.
 //  Copyright © 2018 Pujun Lun. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController, VideoCaptureDelegate {
-    
+class CaptureViewController: UIViewController, VideoCaptureDelegate {
+
     var videoLayer: VideoLayer!
     let shapeLayer = CAShapeLayer()
-    var lastFrame: CIImage?
     var faceBoundingBox: CGRect?
     var viewBoundsSize: CGSize!
     var imageView = UIImageView()
-
+    var bigTimer: Timer!
+    var smallTimer: Timer!
+    var countDown = 0
+    let noFaceImage = UIImage(contentsOfFile: Bundle.main.path(forResource: "face", ofType: "png")!)!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,8 +41,11 @@ class ViewController: UIViewController, VideoCaptureDelegate {
         view.addSubview(imageView)
         
         viewBoundsSize = view.bounds.size
+        
+        bigTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(timeBig), userInfo: nil, repeats: true)
+        bigTimer.fire()
     }
-
+    
     override func viewDidLayoutSubviews() {
         videoLayer.frame = view.frame
         shapeLayer.frame = view.frame
@@ -57,15 +63,42 @@ class ViewController: UIViewController, VideoCaptureDelegate {
         }
     }
     
+    @objc func timeBig() {
+        countDown = 10
+        smallTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timeSmall), userInfo: nil, repeats: true)
+    }
+    
+    @objc func timeSmall() {
+        if self.faceBoundingBox != nil {
+            let imageData = UIImageJPEGRepresentation(imageView.image!, 1.0)?.base64EncodedString()
+            ServerUtils.sendData(Data(),
+                                 headerFields: ["Type": "Test",
+                                                "Image": imageData!]) { returnedData in
+                                                    if let data = returnedData {
+                                                        if let returnedStr = String.init(data: data, encoding: .utf8) {
+                                                            if returnedStr != "True" {
+                                                                self.showError(returnedStr)
+                                                            }
+                                                        }
+                                                    }
+            }
+        }
+        
+        countDown -= 1
+        if countDown == 0 {
+            smallTimer.invalidate()
+            smallTimer = nil
+        }
+    }
+    
     func didCaptureFrame(_ frame: CIImage) {
-        lastFrame = frame
         LocalDetector.sharedInstance.detectFace(
             in: frame,
             resultHandler: {
                 [unowned self] (detectionResult) in
                 switch detectionResult {
                 case .notFound:
-                    self.faceBoundingBox = nil
+                    self.didNotFindFace()
                 case let .foundByDetection(faceBoundingBox):
                     self.didFindFace(inImage: frame, withRect: faceBoundingBox)
                 case let .foundByTracking(faceBoundingBox):
@@ -81,7 +114,17 @@ class ViewController: UIViewController, VideoCaptureDelegate {
                       height: rect.size.height * size.height)
     }
     
+    func didNotFindFace() {
+        DispatchQueue.main.async {
+            self.faceBoundingBox = nil
+            self.imageView.image = self.noFaceImage
+            self.shapeLayer.sublayers = nil
+        }
+    }
+    
     func didFindFace(inImage image: CIImage, withRect rect: CGRect) {
+        self.faceBoundingBox = rect
+        
         let ciImage = image.cropped(to: scale(rect, to: image.extent.size))
         
         guard let cgImage = CIContext().createCGImage(ciImage, from: ciImage.extent) else {
@@ -89,13 +132,6 @@ class ViewController: UIViewController, VideoCaptureDelegate {
             return
         }
         let uiImage = UIImage(cgImage: cgImage)
-        
-        let imageData = UIImageJPEGRepresentation(uiImage, 1.0)?.base64EncodedString()
-        ServerUtils.sendData(Data(),
-                             headerFields: ["Type": "Baseline",
-                                            "Image": imageData!]) { returnedData in
-                                                print(String.init(data: returnedData!, encoding: .utf8))
-        }
         
         DispatchQueue.main.async {
             self.imageView.image = uiImage
@@ -109,4 +145,3 @@ class ViewController: UIViewController, VideoCaptureDelegate {
     }
 
 }
-
